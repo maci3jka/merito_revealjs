@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/night.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -16,15 +16,63 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2
-						<aside class="notes">
-						<p>Some notes</p>
-						</aside>
-						<p>Some slide text</p>
-						<aside class="notes">
-						<p>and some more notes</p>
-					</aside>
+
+					<section data-markdown="slides/intro.md">
+					</section>
+					<section data-markdown>
+
+					  <textarea data-template>
+						## Slide 1
+						A paragraph with some text and a [link](http://hakim.se).
+						---
+						## Slide 2
+						---
+						## Slide 3
+					  </textarea>
+					</section>
+				<section data-markdown>
+					<!-- .slide: data-background="#000000" -->
+					<script type="text/template">
+						- Item 1 <!-- .element: class="fragment" data-fragment-index="2" -->
+						- Item 2 <!-- .element: class="fragment" data-fragment-index="1" -->
+					</script>
+				</section>
+				<section data-markdown>
+					  <textarea data-template>
+						```js [1-2|3|4]
+						let a = 1;
+						let b = 2;
+						let c = x => 1 + 2 + x;
+						c(3);
+						```
+  						---
+						```terraform [1|3|4-5]
+						data "azuread_client_config" "current" {}
+
+						provider "kubernetes" {
+						  host                   = "https://${var.aks_host}:443"
+						  cluster_ca_certificate = base64decode(var.aks_cluster_ca_certificate)
+
+						  exec {
+							api_version = "client.authentication.k8s.io/v1beta1"
+							command     = "kubelogin"
+							args = [
+							  "get-token",
+							  "--environment",
+							  "AzurePublicCloud",
+							  "--tenant-id",
+							  data.azuread_client_config.current.tenant_id,
+							  "--server-id",
+							  "6dae42f8-4368-4678-94ff-3960e28e3630", # Always for AKS Managed AAD
+							  "|",
+							  "jq",
+							  ".status.token"
+							]
+						  }
+						}
+						```
+					  </textarea>
+
 				</section>
 			</div>
 		</div>
